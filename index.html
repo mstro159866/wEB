@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="مرحبا بك في عالمنا حيث يمكنك دردشه" />
+  <title>عالم Mstro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      direction: rtl;
+    }
+
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #1a0000;
+      color: white;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    .grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px);
+      background-size: 20px 20px;
+      z-index: 0;
+    }
+
+    .circle {
+      position: absolute;
+      background-color: rgba(255, 0, 0, 0.2);
+      border-radius: 50%;
+      animation: move 20s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes move {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(calc(100vw * var(--x)), calc(100vh * var(--y)));
+      }
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      animation: fall 2s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(-100vh);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .content {
+      padding: 100px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #ff4d4d;
+    }
+
+    .description {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      color: white;
+    }
+
+    a.button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 40px;
+      font-size: 1.1rem;
+      background-color: #ff3333;
+      color: white;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: 0.3s ease;
+      box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+      animation: glow 2s infinite alternate;
+    }
+
+    a.button:hover {
+      background-color: #ff6666;
+      box-shadow: 0 0 25px rgba(255, 102, 102, 0.9);
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 10px rgba(255, 51, 51, 0.4);
+      }
+      to {
+        box-shadow: 0 0 20px rgba(255, 102, 102, 0.9);
+      }
+    }
+
+    .server-description {
+      margin-top: 20px;
+      font-size: 1rem;
+      color: white;
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    /* Navbar Styling */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #1a0000;
+      padding: 10px 20px;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      font-size: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    nav a:hover {
+      background-color: #ff3333;
+      border-radius: 5px;
+    }
+
+    nav .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .navbar-links {
+      display: flex;
+    }
+
+    .navbar-links a {
+      margin-right: 20px;
+    }
+
+    /* قسم "من نحن" */
+    .about-us {
+      text-align: center;
+      margin-top: 150px;
+      font-size: 2rem;
+      color: red;
+      font-weight: bold;
+    }
+
+    /* قسم التعريف */
+    .server-description {
+      text-align: center;
+      margin-top: 50px;
+      font-size: 1.5rem;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* قسم التحديثات */
+    .updates-section {
+      text-align: center;
+      margin-top: 100px;
+      padding: 50px 20px;
+    }
+
+    .updates-section h2 {
+      font-size: 2rem;
+      color: #ff4d4d;
+    }
+
+    .updates-section .update-image {
+      margin: 20px;
+      width: 300px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 51, 51, 0.6);
+      transition: 0.3s ease;
+    }
+
+    .updates-section .update-image:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px rgba(255, 102, 102, 0.9);
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <nav>
+    <div class="logo">Mstro</div>
+    <div class="navbar-links">
+      <a href="#about-us">من نحن</a>
+      <a href="#updates">آخر التحديثات</a>
+      <a href="https://dsc.gg/mstro-world" target="_blank">انضم الآن</a>
+    </div>
+  </nav>
+
+  <div class="grid"></div>
+
+  <script>
+    const sizes = [100, 60, 40, 80, 50];
+
+    for (let i = 0; i < sizes.length; i++) {
+      const circle = document.createElement("div");
+      circle.className = "circle";
+      circle.style.width = `${sizes[i]}px`;
+      circle.style.height = `${sizes[i]}px`;
+      circle.style.left = `${Math.random() * 100}%`;
+      circle.style.top = `${Math.random() * 100}%`;
+      circle.style.setProperty("--x", (Math.random() * 2 - 1).toFixed(2));
+      circle.style.setProperty("--y", (Math.random() * 2 - 1).toFixed(2));
+      circle.style.animationDuration = `${20 + Math.random() * 5}s`;
+      document.body.appendChild(circle);
+    }
+  </script>
+
+  <!-- مرحبا بك في عالم Mstro -->
+  <div class="container">
+    <div class="content">
+      <h1>مرحبا بك في عالم Mstro</h1>
+      <p class="description">مرحبا بك في عالمنا حيث يمكنك دردشه</p>
+      <a href="https://dsc.gg/mstro-world" class="button" target="_blank">انضم الآن !!</a>
+    </div>
+  </div>
+
+  <!-- قسم "من نحن" -->
+  <div id="about-us" class="about-us">
+    <p>من نحن</p>
+  </div>
+
+  <!-- قسم التعريف -->
+  <div id="description" class="server-description">
+    <p>سيرفر ديسكوردنا هو مكان مخصص للدردشة والفعاليات الشيقة، حيث يمكن للمجتمع التفاعل والمشاركة في مختلف الأنشطة.</p>
+  </div>
+
+  <!-- قسم التحديثات -->
+  <div id="updates" class="updates-section">
+    <h2>آخر التحديثات</h2>
+    <div>
+      <img src="update1.jpg" alt="تحديث 1" class="update-image">
+      <img src="update2.jpg" alt="تحديث 2" class="update-image">
+      <img src="update3.jpg" alt="تحديث 3" class="update-image">
+    </div>
+  </div>
+</body>
+</html>
